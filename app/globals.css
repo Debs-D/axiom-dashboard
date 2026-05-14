@@ -3,25 +3,79 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --axiom-bg:      #06060f;
+  --axiom-surface: #0d0d1f;
+  --axiom-border:  #1a1a35;
+  --axiom-violet:  #8b5cf6;
+  --axiom-amber:   #f59e0b;
+  --axiom-emerald: #10b981;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--axiom-bg);
+  color: #e2e8f0;
+  font-family: var(--font-geist-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Scrollbar styling — dark terminal feel */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0d0d1f;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a4a;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a6a;
+}
+
+/* Panel base — subtle violet glow border */
+.axiom-panel {
+  background: #0d0d1f;
+  border: 1px solid #1a1a35;
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.06),
+    inset 0 1px 0 rgba(139, 92, 246, 0.04);
+}
+
+/* Number display — monospace */
+.axiom-num {
+  font-family: var(--font-geist-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Recharts custom overrides */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: #1a1a35 !important;
+}
+
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+/* Feed animation for new rows */
+@keyframes slide-down {
+  from { transform: translateY(-8px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.feed-row-enter {
+  animation: slide-down 0.2s ease-out;
 }
